@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./creativity-svgrepo-com.svg" />
+    <title>Study Question Solver</title>
+    <style>
+      :root {
+        --primary-color: #4285f4;
+        --secondary-color: #34a853;
+        --accent-color: #ea4335;
+        --light-color: #f8f9fa;
+        --dark-color: #202124;
+        --gray-color: #5f6368;
+        --border-radius: 8px;
+        --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: white;
+        box-shadow: var(--box-shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--gray-color);
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-color);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray-color);
+      }
+
+      .hero {
+        padding: 60px 0;
+        text-align: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--dark-color);
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        color: var(--gray-color);
+        max-width: 700px;
+        margin: 0 auto 30px;
+      }
+
+      .main-content {
+        padding: 40px 0;
+      }
+
+      .question-form {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark-color);
+      }
+
+      .subject-select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .question-input {
+        width: 100%;
+        min-height: 150px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        resize: vertical;
+      }
+
+      .upload-area {
+        border: 2px dashed #ddd;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-bottom: 15px;
+      }
+
+      .upload-area:hover {
+        border-color: var(--primary-color);
+        background-color: rgba(66, 133, 244, 0.05);
+      }
+
+      .upload-area.active {
+        border-color: var(--primary-color);
+        background-color: rgba(66, 133, 244, 0.1);
+      }
+
+      .upload-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      .upload-text {
+        margin-bottom: 10px;
+      }
+
+      .upload-hint {
+        font-size: 0.9rem;
+        color: var(--gray-color);
+      }
+
+      #fileInput {
+        display: none;
+      }
+
+      .preview-container {
+        display: none;
+        margin-top: 15px;
+        position: relative;
+      }
+
+      .preview-image {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: var(--border-radius);
+        display: block;
+        margin: 0 auto;
+      }
+
+      .remove-image {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .submit-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .submit-btn:hover {
+        background-color: #3367d6;
+      }
+
+      .loading {
+        display: none;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: var(--primary-color);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .answer-container {
+        display: none;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+        margin-top: 30px;
+      }
+
+      .answer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .answer-title {
+        font-size: 1.3rem;
+        color: var(--dark-color);
+      }
+
+      .copy-btn {
+        background-color: var(--light-color);
+        color: var(--gray-color);
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .copy-btn:hover {
+        background-color: #e9ecef;
+      }
+
+      .answer-content {
+        line-height: 1.7;
+      }
+
+      .answer-content pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: var(--border-radius);
+        overflow-x: auto;
+        margin: 15px 0;
+      }
+
+      .answer-content code {
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .features {
+        padding: 60px 0;
+        background-color: white;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2rem;
+        color: var(--dark-color);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .feature-card {
+        background-color: var(--light-color);
+        border-radius: var(--border-radius);
+        padding: 25px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      .feature-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: var(--dark-color);
+      }
+
+      .feature-desc {
+        color: var(--gray-color);
+      }
+
+      footer {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 40px 0 20px;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #bdc1c6;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #3c4043;
+        color: #bdc1c6;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 70px;
+          left: 0;
+          right: 0;
+          background-color: white;
+          flex-direction: column;
+          padding: 20px;
+          box-shadow: var(--box-shadow);
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero p {
+          font-size: 1rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: var(--dark-color);
+        color: white;
+        padding: 12px 20px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .tab-btn {
+        padding: 10px 20px;
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--gray-color);
+        transition: all 0.3s;
+      }
+
+      .tab-btn.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav class="navbar">
+          <a href="#" class="logo">
+            <span class="logo-icon">🧠</span>
+            <span>Study Question Solver</span>
+          </a>
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#solve">Solve Questions</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="container">
+        <h1>Get Instant Help with Your Homework</h1>
+        <p>
+          Our Website-powered question solver can help you with English, Math,
+          Hindi, Physics, Chemistry, Biology and more. Just ask your question
+          and get detailed solutions instantly.
+        </p>
+      </div>
+    </section>
+
+    <section class="main-content" id="solve">
+      <div class="container">
+        <div class="question-form">
+          <div class="form-group">
+            <label for="subject">Select Subject</label>
+            <select id="subject" class="subject-select">
+              <option value="general">General Question</option>
+              <option value="hindi">Hindi</option>
+              <option value="english">English</option>
+              <option value="math">Mathematics</option>
+              <option value="physics">Physics</option>
+              <option value="chemistry">Chemistry</option>
+              <option value="biology">Biology</option>
+              <option value="history">History</option>
+              <option value="geography">Geography</option>
+              <option value="computer">Computer Science</option>
+            </select>
+          </div>
+
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="text-tab">
+              Text Question
+            </button>
+            <button class="tab-btn" data-tab="image-tab">Image Question</button>
+          </div>
+
+          <div class="tab-content active" id="text-tab">
+            <div class="form-group">
+              <label for="question">Your Question</label>
+              <textarea
+                id="question"
+                class="question-input"
+                placeholder="Type your question here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="tab-content" id="image-tab">
+            <div class="form-group">
+              <label>Upload Question Image</label>
+              <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">JPG, PNG, or GIF (Max 5MB)</div>
+                <input type="file" id="fileInput" accept="image/*" />
+              </div>
+              <div class="preview-container" id="previewContainer">
+                <img
+                  class="preview-image"
+                  id="previewImage"
+                  src="#"
+                  alt="Preview"
+                />
+                <button class="remove-image" id="removeImage">×</button>
+              </div>
+            </div>
+          </div>
+
+          <button id="submitBtn" class="submit-btn">Get Answer</button>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Generating answer...</p>
+        </div>
+
+        <div class="answer-container" id="answerContainer">
+          <div class="answer-header">
+            <h3 class="answer-title">Answer</h3>
+            <button id="copyBtn" class="copy-btn">
+              <span>📋</span>
+              <span>Copy</span>
+            </button>
+          </div>
+          <div class="answer-content" id="answerContent">
+            <!-- Answer will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title">Why Choose Our Question Solver</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Instant Answers</h3>
+            <p class="feature-desc">
+              Get detailed solutions to your questions in seconds, saving you
+              time and effort.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Multiple Subjects</h3>
+            <p class="feature-desc">
+              Covers all major subjects from languages to sciences and
+              mathematics.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🖼️</div>
+            <h3 class="feature-title">Image Upload</h3>
+            <p class="feature-desc">
+              Upload images of problems, diagrams or handwritten questions.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💯</div>
+            <h3 class="feature-title">Free to Use</h3>
+            <p class="feature-desc">
+              Completely free service with no hidden charges or subscriptions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="about">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Study Question Solver</h3>
+            <p>
+              Your personal tutorial for all subjects. Get instant help with
+              homework and learning.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h3>Subjects</h3>
+            <ul class="footer-links">
+              <li><a href="#">Mathematics</a></li>
+              <li><a href="#">Science</a></li>
+              <li><a href="#">Languages</a></li>
+              <li><a href="#">Social Studies</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>
+            &copy; 2025 Study Question Solver (Developer Samarsekhar). All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const navLinks = document.getElementById("navLinks");
+
+      mobileMenuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          navLinks.classList.remove("active");
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Tab functionality
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tabId = btn.getAttribute("data-tab");
+
+          // Remove active class from all buttons and contents
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          tabContents.forEach((c) => c.classList.remove("active"));
+
+          // Add active class to clicked button and corresponding content
+          btn.classList.add("active");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Image upload functionality
+      const uploadArea = document.getElementById("uploadArea");
+      const fileInput = document.getElementById("fileInput");
+      const previewContainer = document.getElementById("previewContainer");
+      const previewImage = document.getElementById("previewImage");
+      const removeImage = document.getElementById("removeImage");
+
+      // Handle click on upload area
+      uploadArea.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      // Handle drag and drop
+      uploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadArea.classList.add("active");
+      });
+
+      uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("active");
+      });
+
+      uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove("active");
+
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          handleFileSelect();
+        }
+      });
+
+      // Handle file selection
+      fileInput.addEventListener("change", handleFileSelect);
+
+      function handleFileSelect() {
+        const file = fileInput.files[0];
+
+        if (file) {
+          // Check file size (max 5MB)
+          if (file.size > 5 * 1024 * 1024) {
+            showToast("File is too large (max 5MB)");
+            return;
+          }
+
+          // Check file type
+          if (!file.type.match("image.*")) {
+            showToast("Please select an image file");
+            return;
+          }
+
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = "block";
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // Remove image
+      removeImage.addEventListener("click", (e) => {
+        e.stopPropagation();
+        fileInput.value = "";
+        previewContainer.style.display = "none";
+      });
+
+      // Question submission
+      const submitBtn = document.getElementById("submitBtn");
+      const questionInput = document.getElementById("question");
+      const subjectSelect = document.getElementById("subject");
+      const loading = document.getElementById("loading");
+      const answerContainer = document.getElementById("answerContainer");
+      const answerContent = document.getElementById("answerContent");
+      const copyBtn = document.getElementById("copyBtn");
+      const toast = document.getElementById("toast");
+
+      // API key
+      const API_KEY = "AIzaSyBKOpa8YhAMCnXybenHhPim68MWIa2Fd7Q"; // Don't use this api key please (use your own api key)
+      // Updated API endpoints with correct model names
+      const TEXT_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+      const VISION_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+      submitBtn.addEventListener("click", async () => {
+        const subject = subjectSelect.value;
+        const activeTab = document.querySelector(".tab-content.active").id;
+
+        if (activeTab === "text-tab") {
+          const question = questionInput.value.trim();
+
+          if (!question) {
+            showToast("Please enter a question");
+            return;
+          }
+
+          await handleTextQuestion(subject, question);
+        } else {
+          const file = fileInput.files[0];
+
+          if (!file) {
+            showToast("Please upload an image");
+            return;
+          }
+
+          await handleImageQuestion(subject, file);
+        }
+      });
+
+      async function handleTextQuestion(subject, question) {
+        // Show loading, hide answer
+        loading.style.display = "block";
+        answerContainer.style.display = "none";
+
+        try {
+          // Construct prompt based on subject
+          let prompt = "";
+          if (subject === "general") {
+            prompt = question;
+          } else {
+            prompt = `You are a ${subject} expert. Provide a detailed, step-by-step solution to the following question in simple language:\n\n${question}`;
+          }
+
+          // Call Gemini API with correct model
+          const response = await fetch(TEXT_API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: prompt,
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.9,
+                topK: 1,
+                topP: 1,
+                maxOutputTokens: 2048,
+                stopSequences: [],
+              },
+              safetySettings: [
+                {
+                  category: "HARM_CATEGORY_HARASSMENT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_HATE_SPEECH",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+              ],
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error?.message || "Failed to get answer");
+          }
+
+          // Extract the answer text
+          const answerText = data.candidates[0].content.parts[0].text;
+
+          // Format the answer with line breaks
+          const formattedAnswer = answerText.replace(/\n/g, "<br>");
+
+          // Display the answer
+          answerContent.innerHTML = formattedAnswer;
+          answerContainer.style.display = "block";
+
+          // Scroll to answer
+          answerContainer.scrollIntoView({ behavior: "smooth" });
+        } catch (error) {
+          console.error("Error:", error);
+          answerContent.innerHTML = `<p style="color: var(--accent-color)">Error: ${
+            error.message || "Failed to get answer. Please try again."
+          }</p>`;
+          answerContainer.style.display = "block";
+        } finally {
+          loading.style.display = "none";
+        }
+      }
+
+      async function handleImageQuestion(subject, file) {
+        // Show loading, hide answer
+        loading.style.display = "block";
+        answerContainer.style.display = "none";
+
+        try {
+          // Read the image file as base64
+          const base64Image = await readFileAsBase64(file);
+
+          // Construct prompt based on subject
+          let prompt = "";
+          if (subject === "general") {
+            prompt =
+              "Analyze this image and provide a detailed answer to the question or problem shown.";
+          } else {
+            prompt = `You are a ${subject} expert. Analyze this image and provide a detailed, step-by-step solution to the question or problem shown in simple language.`;
+          }
+
+          // Call Gemini Vision API with correct model
+          const response = await fetch(VISION_API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    { text: prompt },
+                    {
+                      inline_data: {
+                        mime_type: file.type,
+                        data: base64Image.split(",")[1], // Remove the data URL prefix
+                      },
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.9,
+                topK: 1,
+                topP: 1,
+                maxOutputTokens: 2048,
+                stopSequences: [],
+              },
+              safetySettings: [
+                {
+                  category: "HARM_CATEGORY_HARASSMENT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_HATE_SPEECH",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+                {
+                  category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                  threshold: "BLOCK_MEDIUM_AND_ABOVE",
+                },
+              ],
+            }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error?.message || "Failed to get answer");
+          }
+
+          // Extract the answer text
+          const answerText = data.candidates[0].content.parts[0].text;
+
+          // Format the answer with line breaks
+          const formattedAnswer = answerText.replace(/\n/g, "<br>");
+
+          // Display the answer
+          answerContent.innerHTML = formattedAnswer;
+          answerContainer.style.display = "block";
+
+          // Scroll to answer
+          answerContainer.scrollIntoView({ behavior: "smooth" });
+        } catch (error) {
+          console.error("Error:", error);
+          answerContent.innerHTML = `<p style="color: var(--accent-color)">Error: ${
+            error.message || "Failed to get answer. Please try again."
+          }</p>`;
+          answerContainer.style.display = "block";
+        } finally {
+          loading.style.display = "none";
+        }
+      }
+
+      function readFileAsBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // Copy answer to clipboard
+      copyBtn.addEventListener("click", () => {
+        const textToCopy = answerContent.innerText;
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(() => {
+            showToast("Answer copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+            showToast("Failed to copy answer");
+          });
+      });
+
+      // Show toast notification
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
